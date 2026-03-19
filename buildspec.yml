@@ -10,9 +10,9 @@ phases:
     commands:
       - echo Construyendo la imagen de Vault personalizada...
       # Aquí tu Dockerfile simplemente diría "FROM hashicorp/vault:latest" y copiaría tus configs
-      - docker build -t vault-custom .
-      - docker tag vault-custom:latest ${REPOSITORY_URI}:latest
+      - docker build -t vault-repo .
+      - docker tag vault-repo:latest 137787521523.dkr.ecr.us-east-1.amazonaws.com/vault-repo:latest
   post_build:
     commands:
       - echo Subiendo a ECR...
-      - docker push ${REPOSITORY_URI}:latest
+      - docker push 137787521523.dkr.ecr.us-east-1.amazonaws.com/configserver-repo:latest
