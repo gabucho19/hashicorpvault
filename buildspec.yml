@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Loggeando en Amazon ECR...
+      - REPOSITORY_URI=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/vault-repo
+      - aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${REPOSITORY_URI}
+  build:
+    commands:
+      - echo Construyendo la imagen de Vault personalizada...
+      # Aquí tu Dockerfile simplemente diría "FROM hashicorp/vault:latest" y copiaría tus configs
+      - docker build -t vault-custom .
+      - docker tag vault-custom:latest ${REPOSITORY_URI}:latest
+  post_build:
+    commands:
+      - echo Subiendo a ECR...
+      - docker push ${REPOSITORY_URI}:latest
