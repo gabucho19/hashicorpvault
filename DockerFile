@@ -1,0 +1,16 @@
+FROM hashicorp/vault:1.15
+
+# Crear directorios para config y datos
+RUN mkdir -p /vault/config /vault/file && \
+    chown -R vault:vault /vault
+
+# Copiar tu archivo de configuración
+COPY /config/config.hcl /vault/config/config.hcl
+
+# Exponer el puerto de la API
+EXPOSE 8200
+
+# Ejecutar como usuario no-root por seguridad
+USER vault
+
+ENTRYPOINT ["vault", "server", "-config=/vault/config/config.hcl"]
