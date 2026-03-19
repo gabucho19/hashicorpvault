@@ -15,4 +15,4 @@ phases:
   post_build:
     commands:
       - echo Subiendo a ECR...
-      - docker push 137787521523.dkr.ecr.us-east-1.amazonaws.com/configserver-repo:latest
+      - docker push 137787521523.dkr.ecr.us-east-1.amazonaws.com/vault-repo:latest
